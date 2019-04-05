@@ -76,8 +76,8 @@ public class Update {
         //Path path = Paths.get(modsFolderGit.getParent());
         //Files.createDirectories(path);
         
-        modsFolderGit.getParentFile().mkdirs();
-        //System.out.println(modsFolderGit.getParent());
+        modsFolderLocal.getParentFile().mkdirs();
+        System.out.println(modsFolderGit.getParent());
 
         
         //System.out.println(modsFolderGit.toString());
