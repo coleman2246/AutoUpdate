@@ -40,7 +40,7 @@ public class Update {
 
         //File modsFolderGit = new File(fileSource);
         //File modsFolderLocal = new File(fileDest);
-        
+        /*
         if (modsFolderLocal.isDirectory()) {
         	modsFolderLocal.mkdirs();
         	return;
@@ -50,10 +50,14 @@ public class Update {
         					.subSequence(0, modsFolderLocal.getAbsoluteFile().toString().lastIndexOf(File.separatorChar)).toString());
         	temp.mkdirs();
         }
-        /*
+        */
+        
         if (modsFolderGit.isDirectory()) {
         	return;
-        }*/
+        }
+        
+        modsFolderGit.getParentFile().mkdirs();
+
         
         //System.out.println(modsFolderGit.toString());
         	
