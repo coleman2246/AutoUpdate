@@ -7,6 +7,9 @@ package update;
 
 import update.Merge;
 import java.io.File;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -31,7 +34,18 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
 public class Update {
 	
-	
+	public static void createDirs(File inFile) {
+		
+		if (inFile.getParentFile().exists()) {
+			
+			inFile.mkdir();
+			return;
+		}
+		
+		createDirs(inFile.getParentFile());
+		
+		
+	}
 	
 	public static void copyFile(File modsFolderGit, File modsFolderLocal) throws IOException {
         //copying and pasting folder 
@@ -56,7 +70,14 @@ public class Update {
         	return;
         }
         
-        modsFolderGit.getParentFile().mkdirs();
+        
+        
+        //createDirs(modsFolderGit.getParentFile());
+        Path path = Paths.get(modsFolderGit.getParent());
+        Files.createDirectories(path);
+        
+        //modsFolderGit.getParentFile().mkdirs();
+        System.out.println(modsFolderGit.getParent());
 
         
         //System.out.println(modsFolderGit.toString());
@@ -88,7 +109,7 @@ public class Update {
 				*/
 		//git = new Git(repo);
 		String repoDir = dir;
-		dir = dir + "\\UOIT-Craft-Modpack";
+		dir = dir + File.separatorChar + "UOIT-Craft-Modpack";
 
 		File gitRepo = new File(dir);
 
