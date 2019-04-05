@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package autobackup;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,12 +34,7 @@ public class AutoBackup {
      * @param args the command line arguments
      * @throws java.io.IOException
      */
-    public static void main(String[] args) throws IOException, InterruptedException {
-//making it so the UI is visible.
-        Ui aa = new Ui();
-        aa.setVisible(true);
-
-    }
+  
 }
 //It extends thread so that the program can be run by the program cocurrently.
 //This was done so the program can be interactied with. The while (!stop) could not be stoppped with out this because the UI could no longer be itneracted with.
@@ -54,16 +49,7 @@ class Backupclass extends Thread {
     public int re = 0;
     public int e = 0;
     public String time="";
-    public Ui aa = null;
-    
-/*making a constructor so that when autobackup is called from the Ui class it
-    passes it the varibles it needs to work. propoerly*/
-    public Backupclass(int interval, String location, Ui aa) {
-        this.interval = interval;
-        this.location = location;
-        this.aa = aa;
 
-    }
 
     @Override
     public void run() {
@@ -117,7 +103,7 @@ class Backupclass extends Thread {
                     }
                     
                     //seting the profress bar
-                    aa.Progress.setIndeterminate(true);
+            
                     //getting ready to rad from the text file
                     File txtFile = new File(path2.toString());
  
@@ -162,7 +148,6 @@ class Backupclass extends Thread {
                     TimeUnit.SECONDS.sleep(interval);
                     //aa.Progress.setValue(0);
                 }
-                aa.Progress.setIndeterminate(false);
             }
 
         } catch (Exception e) {
@@ -178,7 +163,7 @@ class Backupclass extends Thread {
 
         Path path5 = Paths.get(path.substring(0, re) + "Backups " + path.substring(e)+" "+ time.replaceAll(":",";") + ".zip");
 
-        Zip aa = new Zip();
+       
         aa.Zip1(path4,path5);
 
     }
