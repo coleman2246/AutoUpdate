@@ -51,12 +51,12 @@ public class Update {
         String repoDir;
         
         
-        String isWindows =System.getProperty("os.name");
+        String isWindows =System.getProperty("os.name").toLowerCase();
   
         
         System.out.print(isWindows);
         
-         if(isWindows.contains("Windows"));
+         if(isWindows.contains("windows"));
         //git = returnGit(repoDir);
 
     }
