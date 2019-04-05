@@ -5,6 +5,7 @@
  */
 package update;
 
+import update.Merge;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,15 +33,16 @@ public class Update {
 	
 	
 	
-	public static void copyFile(String fileSource, String fileDest) throws IOException {
+	public static void copyFile(File modsFolderGit, File modsFolderLocal) throws IOException {
         //copying and pasting folder 
         FileChannel sourceChannel = null;
         FileChannel destChannel = null;
 
-        File modsFolderGit = new File(fileSource);
-        File modsFolderLocal = new File(fileDest);
+        //File modsFolderGit = new File(fileSource);
+        //File modsFolderLocal = new File(fileDest);
         
-       
+        modsFolderLocal.mkdirs();
+        
         	
         
         sourceChannel = new FileInputStream(modsFolderGit).getChannel();
@@ -52,7 +54,7 @@ public class Update {
 
         sourceChannel.close();
         destChannel.close();
-        }
+	}
 	
 	
 	
@@ -68,6 +70,7 @@ public class Update {
 				.build();
 				*/
 		//git = new Git(repo);
+		String repoDir = dir;
 		dir = dir + "\\UOIT-Craft-Modpack";
 
 		File gitRepo = new File(dir);
@@ -90,6 +93,7 @@ public class Update {
                 	System.out.println("No update Avaliable");
                 	return git;
                 }else {
+                	Merge temp = new Merge(dir, repoDir);
                 	System.out.println("Update Downloading");
                 }
        
@@ -138,6 +142,7 @@ public class Update {
 
 		Git git = returnGit(repoDir, os,userName);
 
+		
 	}
 
 }
