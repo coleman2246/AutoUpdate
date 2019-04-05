@@ -47,6 +47,7 @@ public class Merge {
 			reader = new JsonReader(new FileReader(endpoint + File.separatorChar + "autoUpdate.json"));
 			// Set values of endpoint into Hashmap
 			this.valuesEnd = this.jsonObj.fromJson(reader, HashMap.class);
+			reader.close();
 		} else {
 			
 			// Create File
@@ -71,7 +72,8 @@ public class Merge {
 			// Make the reader point to local endpoint
 			reader = new JsonReader(new FileReader(startpoint + File.separatorChar + "autoUpdate.json"));
 			// Set values of endpoint into Hashmap
-			this.valuesStart = this.jsonObj.fromJson(reader, HashMap.class);	
+			this.valuesStart = this.jsonObj.fromJson(reader, HashMap.class);
+			reader.close();
 		} else {
 			// Create file
 			temp.createNewFile();
@@ -95,9 +97,14 @@ public class Merge {
 		
 		FileWriter out = new FileWriter(endpoint + File.separatorChar + "autoUpdate.json");
 		this.jsonObj.toJson(this.valuesEnd, out);
+		out.flush();
+		out.close();
 		
 		out = new FileWriter(startpoint + File.separatorChar + "autoUpdate.json");
 		this.jsonObj.toJson(this.valuesStart, out);
+		out.flush();
+		out.close();
+		
 		
 	}
 

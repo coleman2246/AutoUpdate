@@ -96,7 +96,7 @@ public class Update {
 	
 	
 	
-	public static Git returnGit(String dir, String os,String user) throws GitAPIException, IOException {
+	public static Git returnGit(String gitDir, String endDir, String os,String user) throws GitAPIException, IOException {
 		Git git = null;
 		/*
 		FileRepositoryBuilder builder = new FileRepositoryBuilder();
@@ -108,12 +108,12 @@ public class Update {
 				.build();
 				*/
 		//git = new Git(repo);
-		String repoDir = dir;
-		dir = dir + File.separatorChar + "UOIT-Craft-Modpack";
+		
+		gitDir = gitDir + File.separatorChar + "UOIT-Craft-Modpack";
 
-		File gitRepo = new File(dir);
+		File gitRepo = new File(gitDir);
 
-		Repository localRepo = new FileRepository(dir + "/.git");
+		Repository localRepo = new FileRepository(gitDir + "/.git");
 
 		try {
 			git = Git.cloneRepository()
@@ -121,7 +121,7 @@ public class Update {
 					.setDirectory(gitRepo)
 					.call();
 			
-			Merge temp = new Merge(repoDir, dir);
+			Merge temp = new Merge(endDir, gitDir);
 			
 			return git;
 		} catch (Exception e) {
@@ -135,7 +135,7 @@ public class Update {
                 	System.out.println("No update Avaliable");
                 	return git;
                 }else {
-                	Merge temp = new Merge(repoDir, dir);
+                	Merge temp = new Merge(endDir, gitDir);
                 	System.out.println("Update Downloading");
                 }
        
@@ -164,16 +164,17 @@ public class Update {
 		boolean testing = true;
 		
 		
-		
+		String minecraftDir="";
 		String repoDir = "";
 		if (os.contains("windows")) {
 			// git = returnGit(repoDir);
 			// C:\\Users\\cole2\\Twitch\\Minecraft\\Instances\\UOIT CRACT\\
-			repoDir = "C:\\Users\\"+userName+"\\Twitch\\Minecraft\\Instances\\UOIT CRACT";
-
+			repoDir = "C:\\Users\\"+userName+"\\Twitch";
+			minecraftDir = "C:\\Users\\"+userName+"\\Twitch\\Minecraft\\Instances\\UOIT CRAFT";
 		} else if (os.contains("linux")&& testing) {
 		
-			repoDir = "/home/mitchell/Documents/temp/updateMine/";
+			repoDir = "/home/" + userName + "/Documents/temp/updateMine/";
+			minecraftDir = "/home/" + userName + "/Documents/temp/updateMine/";
 		} else if (os.contains("mac")) {
             // TODO find dir for mac
 		} else {
@@ -182,7 +183,7 @@ public class Update {
 			System.exit(1);
 		}
 
-		Git git = returnGit(repoDir, os,userName);
+		Git git = returnGit(repoDir, minecraftDir, os,userName);
 
 		
 	}
