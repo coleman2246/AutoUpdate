@@ -10,11 +10,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
 public class Merge {
 	
-	private Gson jsonObj = new Gson();
+	private Gson jsonObj = new GsonBuilder().setPrettyPrinting().create();
 	private HashMap<String, ArrayList<String>> valuesEnd;
 	private HashMap<String, ArrayList<String>> valuesStart;
 	public File endpoint;
