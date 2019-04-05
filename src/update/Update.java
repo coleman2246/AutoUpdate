@@ -33,7 +33,7 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
  */
 
 public class Update {
-	
+	/*
 	public static void createDirs(File inFile) {
 		
 		if (inFile.getParentFile().exists()) {
@@ -45,7 +45,7 @@ public class Update {
 		createDirs(inFile.getParentFile());
 		
 		
-	}
+	}*/
 	
 	public static void copyFile(File modsFolderGit, File modsFolderLocal) throws IOException {
         //copying and pasting folder 
@@ -73,11 +73,11 @@ public class Update {
         
         
         //createDirs(modsFolderGit.getParentFile());
-        Path path = Paths.get(modsFolderGit.getParent());
-        Files.createDirectories(path);
+        //Path path = Paths.get(modsFolderGit.getParent());
+        //Files.createDirectories(path);
         
-        //modsFolderGit.getParentFile().mkdirs();
-        System.out.println(modsFolderGit.getParent());
+        modsFolderGit.getParentFile().mkdirs();
+        //System.out.println(modsFolderGit.getParent());
 
         
         //System.out.println(modsFolderGit.toString());
