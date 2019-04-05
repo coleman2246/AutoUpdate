@@ -20,7 +20,7 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
 public class Update {
    
-    public static Git returnGit(String dir) throws GitAPIException, IOException {
+    public static Git returnGit(String dir,String os) throws GitAPIException, IOException {
         Git git;
         
         FileRepositoryBuilder builder = new FileRepositoryBuilder();
@@ -47,18 +47,32 @@ public class Update {
      */
     public static void main(String[] args) throws GitAPIException, IOException {
         // TODO code application logic here
-        Git git;
-        String repoDir;
         
-        
-        String isWindows =System.getProperty("os.name").toLowerCase();
+        //getting os 
+        String os =System.getProperty("os.name").toLowerCase();
   
         
-        System.out.print(isWindows);
         
-         if(isWindows.contains("windows"));
-        //git = returnGit(repoDir);
-
+        
+         if(os.contains("windows")){
+            //git = returnGit(repoDir);
+            
+         }else if (os.contains("linux")){
+             
+         }else{
+             
+         }
+        
+        
+        Git git;
+        
+        
+        
+        
+        
+        
+        
+        
     }
 
 }
