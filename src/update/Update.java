@@ -51,7 +51,7 @@ public class Update {
             try {
                 git = new Git(localRepo);
                 git.pull().call();
-            } catch (Exception e) {
+            } catch (Exception f) {
                 System.out.println("\n UPDATE FAILED: report on https://github.com/coleman2246/UOIT-Craft-Modpack.git");
             }
 
@@ -80,7 +80,7 @@ public class Update {
 		} else if (os.contains("linux")) {
 			repoDir = "/home/mitchell/Documents/temp/updateMine/";
 		} else if (os.contains("mac")) {
-
+            // TODO find dir for mac
 		} else {
 			System.out.println("Unknown filesystem: " + os);
 
