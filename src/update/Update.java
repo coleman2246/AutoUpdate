@@ -12,67 +12,60 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
-
 /**
  *
  * @author cole2
  */
 
 public class Update {
-   
-    public static Git returnGit(String dir,String os) throws GitAPIException, IOException {
-        Git git;
-        
-        FileRepositoryBuilder builder = new FileRepositoryBuilder();
-        
-        Repository repo = builder.setGitDir(new File(dir))
-                .readEnvironment() // scan environment GIT_* variables
-                .findGitDir() // scan up the file system tree
-                .build(); 
-        git = new Git(repo);
-        
-        try {
-            git.cloneRepository()
-                .setURI("https://github.com/coleman2246/UOIT-Craft-Modpack.git")
-                .call(); 
-        } catch (Exception e) {
-            ;
-        }
-        
-        return git;
-    }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) throws GitAPIException, IOException {
-        // TODO code application logic here
-        
-        //getting os 
-        String os =System.getProperty("os.name").toLowerCase();
-  
-        
-        
-        
-         if(os.contains("windows")){
-            //git = returnGit(repoDir);
-            
-         }else if (os.contains("linux")){
-             
-         }else{
-             
-         }
-        
-        
-        Git git;
-        
-        
-        
-        
-        
-        
-        
-        
-    }
+	public static Git returnGit(String dir, String os) throws GitAPIException, IOException {
+		Git git;
+
+		FileRepositoryBuilder builder = new FileRepositoryBuilder();
+
+		Repository repo = builder.setGitDir(new File(dir)).readEnvironment() // scan environment GIT_* variables
+				.findGitDir() // scan up the file system tree
+				.build();
+		git = new Git(repo);
+
+		try {
+			git.cloneRepository().setURI("https://github.com/coleman2246/UOIT-Craft-Modpack.git").call();
+		} catch (Exception e) {
+			;
+		}
+
+		return git;
+	}
+	
+	public String getUserName() {
+		String user = "";
+		
+		return user;
+	}
+
+	/**
+	 * @param args
+	 *            the command line arguments
+	 */
+	public static void main(String[] args) throws GitAPIException, IOException {
+		// TODO code application logic here
+
+		// getting os
+		String os = System.getProperty("os.name").toLowerCase();
+		String repoDir = "";
+		if (os.contains("windows")) {
+			// git = returnGit(repoDir);
+			repoDir = "";
+
+		} else if (os.contains("linux")) {
+
+		} else {
+
+		}
+
+		Git git;
+
+	}
 
 }
