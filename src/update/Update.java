@@ -41,8 +41,21 @@ public class Update {
         //File modsFolderGit = new File(fileSource);
         //File modsFolderLocal = new File(fileDest);
         
-        modsFolderLocal.mkdirs();
+        if (modsFolderLocal.isDirectory()) {
+        	modsFolderLocal.mkdirs();
+        	return;
+        } else if (modsFolderLocal.isFile()) {
+        	File temp = new File(modsFolderLocal.getAbsolutePath()
+        					.toString()
+        					.subSequence(0, modsFolderLocal.getAbsoluteFile().toString().lastIndexOf(File.separatorChar)).toString());
+        	temp.mkdirs();
+        }
+        /*
+        if (modsFolderGit.isDirectory()) {
+        	return;
+        }*/
         
+        //System.out.println(modsFolderGit.toString());
         	
         
         sourceChannel = new FileInputStream(modsFolderGit).getChannel();
@@ -82,8 +95,12 @@ public class Update {
 					.setURI("https://github.com/coleman2246/UOIT-Craft-Modpack.git")
 					.setDirectory(gitRepo)
 					.call();
-
+			
+			Merge temp = new Merge(repoDir, dir);
+			
+			return git;
 		} catch (Exception e) {
+			e.printStackTrace();
             try {
                 git = new Git(localRepo);
                 String parseResult = git.pull().call().toString();
@@ -93,7 +110,7 @@ public class Update {
                 	System.out.println("No update Avaliable");
                 	return git;
                 }else {
-                	Merge temp = new Merge(dir, repoDir);
+                	Merge temp = new Merge(repoDir, dir);
                 	System.out.println("Update Downloading");
                 }
        

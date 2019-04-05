@@ -25,43 +25,48 @@ public class Merge {
 
 		this.runDir = new File(runDir);
 		
+		ArrayList<String> empty = new ArrayList<String>();
 		
-		
-		File temp = new File(dir + File.pathSeparatorChar + "autoUpdate.json");
+		File temp = new File(dir + File.separatorChar + "autoUpdate.json");
 		JsonReader reader = null;
 		
 		if (temp.exists()) {
-			reader = new JsonReader(new FileReader(dir + File.pathSeparatorChar + "autoUpdate.json"));
+			reader = new JsonReader(new FileReader(dir + File.separatorChar + "autoUpdate.json"));
 			this.values = this.jsonObj.fromJson(reader, HashMap.class);
 		} else {
 			temp.createNewFile();
-
-			this.valuesLoc.put("exclude", new ArrayList<String>());
-			this.valuesLoc.put("override", new ArrayList<String>());
+			
+			this.values = new HashMap <String, ArrayList<String>>();
+			
+			this.values.put("exclude", empty);
+			this.values.put("override", empty);
 		}
 		
-		temp = new File(runDir + File.pathSeparatorChar + "autoUpdate.json");
+		temp = new File(runDir + File.separatorChar + "autoUpdate.json");
 		
 		if (temp.exists()) {
-			reader = new JsonReader(new FileReader(runDir + File.pathSeparatorChar + "autoUpdate.json"));
+			reader = new JsonReader(new FileReader(runDir + File.separatorChar + "autoUpdate.json"));
 			this.valuesLoc = this.jsonObj.fromJson(reader, HashMap.class);	
 		} else {
 			temp.createNewFile();
-
-			this.valuesLoc.put("exclude", new ArrayList<String>());
-			this.valuesLoc.put("override", new ArrayList<String>());
+			temp.createNewFile();
+			
+			this.valuesLoc = new HashMap <String, ArrayList<String>>();
+			
+			this.valuesLoc.put("exclude", empty);
+			this.valuesLoc.put("override", empty);
 		}
 		
 				
 		this.baseDir = new File(dir);
 
-		recurse(this.baseDir);
-		recurseLoc(this.runDir);
+		//this.recurse(this.baseDir);
+		this.recurseLoc(this.runDir);
 		
-		FileWriter out = new FileWriter(dir + File.pathSeparatorChar + "autoUpdate.json");
+		FileWriter out = new FileWriter(dir + File.separatorChar + "autoUpdate.json");
 		this.jsonObj.toJson(this.values, out);
 		
-		out = new FileWriter(runDir + File.pathSeparatorChar + "autoUpdate.json");
+		out = new FileWriter(runDir + File.separatorChar + "autoUpdate.json");
 		this.jsonObj.toJson(this.valuesLoc, out);
 		
 	}
@@ -69,7 +74,9 @@ public class Merge {
 	private void recurse(File node) throws IOException {
 		System.out.println(node.getAbsoluteFile());
 		String relative = node.toURI().relativize(this.baseDir.toURI()).toString();
-		File relRun = new File(this.runDir.getAbsoluteFile().toString() + relative);
+		relative = node.getAbsolutePath().substring(this.baseDir.getAbsolutePath().length(), node.getAbsolutePath().length()).toString();
+		
+		File relRun = new File(this.runDir.getAbsoluteFile().toString() + File.separatorChar + relative);
 		
 		
 		
@@ -102,19 +109,24 @@ public class Merge {
 	}
 	
 	private void recurseLoc(File node) throws IOException {
-		//System.out.println(node.getAbsoluteFile());
-		String relative = node.toURI().relativize(this.runDir.toURI()).toString();
-		File relRun = new File(this.baseDir.getAbsoluteFile().toString() + relative);
 		
-		if (!relRun.exists()) {
-			relRun.mkdirs();
+		String relative = node.toURI().relativize(this.runDir.toURI()).getPath();
+		relative = node.getAbsolutePath().substring(this.runDir.getAbsolutePath().length(), node.getAbsolutePath().length()).toString();
+		
+		File relRun = new File(this.baseDir.getAbsoluteFile().toString() + File.separatorChar + relative);
+		System.out.println(node.toString());
+		System.out.println(relRun.toString());
+		System.out.println(relative);
+		
+		if (!relRun.exists() && node.isFile() && !node.toString().contains(".git")) {
+			//relRun.mkdirs();
 			Update.copyFile(node, relRun);
 		}
 		
 		if (node.isDirectory()) {
 			String[] subNode = node.list();
 			for (String filename : subNode) {
-				recurse(new File(node, filename));
+				recurseLoc(new File(node, filename));
 			}
 			
 			
