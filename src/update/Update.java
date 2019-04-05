@@ -24,7 +24,7 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 public class Update {
 
 	public static Git returnGit(String dir, String os) throws GitAPIException, IOException {
-		Git git;
+		Git git = null;
 		/*
 		FileRepositoryBuilder builder = new FileRepositoryBuilder();
 
