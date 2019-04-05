@@ -12,13 +12,19 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
+import java.lang.Object.SystemUtils.IS_OS_MAC_OSX;
+import java.lang.Object.SystemUtils.IS_OS_WINDOWS;
+import java.lang.Object.SystemUtils.IS_OS_LINUX;
+
+
 /**
  *
  * @author cole2
  */
 
 public class Update {
-
+    Boolean isWindows = SystemUtils("os.name");
+    
     public static Git returnGit(String dir) throws GitAPIException, IOException {
         Git git;
         
@@ -47,8 +53,26 @@ public class Update {
     public static void main(String[] args) throws GitAPIException, IOException {
         // TODO code application logic here
         Git git;
+        String repoDir;
         
-        git = returnGit("C:\\Users\\cole2\\Twitch\\Minecraft\\Instances\\Test");
+        if (IS_OS_MAC_OSX) {
+            // TODO: Find dir
+            repoDir = "";
+            System.out.println("MAC");
+        } else if (IS_OS_WINDOWS) {
+            repoDir = "C:\\Users\\cole2\\Twitch\\Minecraft\\Instances\\Test";
+            System.out.println("WINDOWS");
+
+        } else if (IS_OS_LINUX){
+            // TODO: Find dir
+            repoDir = "";
+            System.out.println("LINUX");
+        } else {
+            ;
+        }
+        
+        
+        git = returnGit(repoDir);
 
     }
 
